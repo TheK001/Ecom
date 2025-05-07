@@ -15,8 +15,11 @@ def register_view(request):
             return redirect('login')
     else:
         form = RegisterForm()
+        context = {
+            'form': form,
+        }
 
-    return render(request, 'registration/register.html', {'form': form})
+    return render(request, 'registration/register.html', context)
 
 def login_view(request):
     if request.method == 'POST':
@@ -33,5 +36,7 @@ def login_view(request):
                 messages.error(request, 'Invalid email or password.')
     else:
         form = LoginForm()
-
-    return render(request, 'registration/login.html', {'form': form})
+        context = {
+            'form': form,
+        }
+    return render(request, 'registration/login.html', context)
