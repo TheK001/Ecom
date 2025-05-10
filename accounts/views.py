@@ -9,14 +9,12 @@ def register_view(request):
     if request.method == 'POST':
         form = RegisterForm(request.POST)
         if form.is_valid():
-            user = form.save(commit=False)
-            user.set_password(form.cleaned_data['password']) 
-            user.save()
+            form.save()
             messages.success(request, "Registration successful. Please log in.")
             return redirect('login')
     else:
         form = RegisterForm()
-        context = {
+    context = {
             'form': form,
         }
 
@@ -28,21 +26,28 @@ def login_view(request):
         if form.is_valid():
             email = form.cleaned_data['email']
             password = form.cleaned_data['password']
-            user = authenticate(request, email=email, password=password)
+            user = authenticate(request, email=email, password=password)  # Authenticate using email
             if user is not None:
                 login(request, user)
                 messages.success(request, 'Logged in successfully!')
-                return redirect('home')  # change this to any view you like
+                return redirect('home')  # Redirect to the home page
             else:
-                messages.error(request, 'Invalid email or password.')
+                messages.error(request, 'Invalid email or password.')  # Show error message
     else:
         form = LoginForm()
-        context = {
-            'form': form,
-        }
+    context = {
+        'form': form,
+    }
     return render(request, 'registration/login.html', context)
 
 def logout_view(request):
     logout(request)
     messages.success(request, 'Logged out successfully!')
-    return redirect('home')  
+    return redirect('login')  
+
+def list_users(request):
+    users = CustomUser.objects.all()
+    context = {
+        'users': users,
+    }
+    return render(request, 'user_list.html', context)

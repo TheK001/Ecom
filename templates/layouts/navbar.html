@@ -7,7 +7,10 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#">Home</a>
+          <a class="nav-link active" aria-current="page" href="{% url "home" %}">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="{% url "users" %}">Users</a>
         </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -27,9 +30,20 @@
       </form>
       
       <div class="d-flex gap-2">
-        <a href="{% url "register" %}" class="btn btn-outline-success">SIGN IN</a>
-        <a href="{% url "login" %}" class="btn btn-outline-success">LOGIN</a>
-        <a class="btn btn-outline-success">LOGOUT</a>
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          {% if user.is_authenticated %}
+            <li class="nav-item">
+              <a href="{% url "logout" %}" class="btn btn-outline-success">LOGOUT</a>
+            </li>
+          {% else %}
+            <li class="nav-item">
+              <a href="{% url "login" %}" class="btn btn-outline-success me-2">LOGIN</a>
+            </li>
+            <li class="nav-item">
+              <a href="{% url "register" %}" class="btn btn-outline-success ml-2">SIGN IN</a>
+            </li>
+          {% endif %}
+        </ul>
       </div>
     </div>
   </div>
