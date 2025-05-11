@@ -13,11 +13,24 @@ def add_product(request):
         context = {
             'form': form,
         }
-    return render(request, 'products/add_product.html', context)
+    return render(request, 'add_product.html', context)
         
 def list_product(request):
     products = Product.objects.all()
     context = {
         'products': products,
     }
-    return render(request, 'products/product_list.html', context)
+    return render(request, 'product_list.html', context)
+
+def add_category(request):
+    if request.method == 'POST':
+        form = CategoryForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('category_list')
+    else:
+        form = CategoryForm()
+        context = {
+            'form': form,
+        }
+    return render(request, 'add_category.html', context)
