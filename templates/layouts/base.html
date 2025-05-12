@@ -13,7 +13,12 @@
     <div class="container">
         {% include 'layouts/navbar.html' %}
         {% block context %}
-             
+             <div class="d-flex justify-content-end">
+                <div class="d-flex flex-column m-3" style="width: 200px;">
+                    <a href="{% url "add_product" %}" class="btn btn-primary mb-2 w-100">Add Product</a>
+                    <a href="{% url "add_category" %}" class="btn btn-primary w-100">Add Category</a>
+                </div>
+            </div>
         {% endblock context %}
     </div>
 

@@ -1,17 +1,25 @@
 {% extends 'layouts/base.html' %}
 {% load static %}
 {% block context %}
-<div class="d-flex justify-content-end">
-  <div class="d-flex flex-column m-3" style="width: 200px;">
-      <a href="{% url "add_product" %}" class="btn btn-primary mb-2 w-100">Add Product</a>
-      <a href="#" class="btn btn-primary w-100">Add Category</a>
-  </div>
-</div>
 
-<div class="card" style="width: 18rem;">
-  <img src="..." class="card-img-top" alt="...">
-  <div class="card-body">
-    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card’s content.</p>
-  </div>
-</div>
+    <h2 class="mb-4">Product List</h2>
+
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+        {% endfor %}
+    {% endif %}
+
+    {% for product in products %}
+    {{ product.image.url }}
+    <div class="card" style="width: 18rem;">
+        <!-- Dynamically display the product image -->
+        <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}">
+        <div class="card-body">
+            <h5 class="card-title">{{ product.name }}</h5>
+            <p class="card-text">{{ product.description }}</p>
+            <a href="#" class="btn btn-primary">{{ product.price }}</a>
+        </div>
+    </div>
+    {% endfor %}
 {% endblock context %}
